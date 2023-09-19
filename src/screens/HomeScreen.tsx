@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import {windowWidth} from '../utils/AppMetrics';
@@ -44,7 +45,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f0f0',
+    // backgroundColor: '#f4f0f0',
   },
   containerHeader: {
     flexDirection: 'row',

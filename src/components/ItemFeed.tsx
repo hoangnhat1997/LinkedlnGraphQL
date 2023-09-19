@@ -24,10 +24,37 @@ const ItemFeed = () => {
         <View style={styles.containerInfo}>
           <TouchableOpacity style={styles.info}>
             <Text style={styles.name}>Nhat Pham</Text>
+            <Text>Looking FullStack, IOS</Text>
+            <Text>1d</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.message}>
           <Icons name="close" size={20} />
+        </View>
+      </View>
+      <View style={styles.containerContent}>
+        <Text style={styles.textContent}>
+          Open new position for FullStack Developer 3 years experience
+        </Text>
+        <Image
+          style={styles.imgContent}
+          source={{
+            uri: 'https://static.careerarc.com/wp-content/uploads/2019/06/15-recruitment-skills-and-competencies-every-recruiter-should-possess.jpg',
+          }}
+        />
+      </View>
+      <View style={styles.containerAction}>
+        <View style={styles.actionButton}>
+          <Icons name="like" size={25} />
+          <Text style={styles.actionText}>Like</Text>
+        </View>
+        <View style={styles.actionButton}>
+          <Icons name="comment" size={25} />
+          <Text style={styles.actionText}>Comment</Text>
+        </View>
+        <View style={styles.actionButton}>
+          <Icons name="share" size={25} />
+          <Text style={styles.actionText}>Share</Text>
         </View>
       </View>
     </View>
@@ -41,7 +68,11 @@ const styles = StyleSheet.create({
     height: 250,
     backgroundColor: '#FFFFFF',
   },
-  top: {},
+  top: {
+    width: windowWidth,
+    height: 10,
+    backgroundColor: '#f4f0f0',
+  },
   containerHeader: {
     marginTop: 10,
     flexDirection: 'row',
@@ -74,5 +105,31 @@ const styles = StyleSheet.create({
   },
   message: {
     marginLeft: 20,
+  },
+  containerContent: {
+    marginTop: 10,
+  },
+  textContent: {
+    fontSize: 16,
+    marginHorizontal: 10,
+    marginBottom: 10,
+  },
+  imgContent: {
+    height: 400,
+    width: windowWidth,
+  },
+  containerAction: {
+    margin: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  actionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionText: {
+    fontSize: 17,
+    marginLeft: 7,
   },
 });

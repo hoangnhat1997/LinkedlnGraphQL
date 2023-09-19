@@ -8,6 +8,17 @@ type IconsProps = PropsWithChildren<{
 }>;
 const Icons = ({name, size}: IconsProps) => {
   switch (name) {
+    case 'share':
+      return <Icon name={'share'} size={size} style={{color: '#737885'}} />;
+
+    case 'comment':
+      return (
+        <Icon name={'comment-dots'} size={size} style={{color: '#737885'}} />
+      );
+
+    case 'like':
+      return <IconAnt name={'like2'} size={size} style={{color: '#737885'}} />;
+
     case 'message':
       return (
         <IconAnt name={'message1'} size={size} style={{color: '#737885'}} />
