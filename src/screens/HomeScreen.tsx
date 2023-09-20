@@ -13,6 +13,7 @@ import {windowWidth} from '../utils/AppMetrics';
 import Icons from '../utils/Icons';
 import ItemFeed from '../components/ItemFeed';
 import dataJson from '../assets/dataJson.json';
+
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -87,4 +88,5 @@ const styles = StyleSheet.create({
   itemsList: {
     marginTop: 10,
   },
+
 });

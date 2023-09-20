@@ -11,6 +11,7 @@ import {windowWidth} from '../utils/AppMetrics';
 import Icons from '../utils/Icons';
 
 const ItemFeed = ({data}: any) => {
+
   return (
     <View style={styles.container}>
       <View style={styles.top}></View>
@@ -35,12 +36,14 @@ const ItemFeed = ({data}: any) => {
       <View style={styles.containerContent}>
         <Text style={styles.textContent}>
           {data.contentFeed}
+
           Open new position for FullStack Developer 3 years experience
         </Text>
         <Image
           style={styles.imgContent}
           source={{
             uri: data.image,
+
           }}
         />
       </View>
