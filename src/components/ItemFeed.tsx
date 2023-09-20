@@ -10,7 +10,7 @@ import React from 'react';
 import {windowWidth} from '../utils/AppMetrics';
 import Icons from '../utils/Icons';
 
-const ItemFeed = () => {
+const ItemFeed = ({data}: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.top}></View>
@@ -34,12 +34,13 @@ const ItemFeed = () => {
       </View>
       <View style={styles.containerContent}>
         <Text style={styles.textContent}>
+          {data.contentFeed}
           Open new position for FullStack Developer 3 years experience
         </Text>
         <Image
           style={styles.imgContent}
           source={{
-            uri: 'https://static.careerarc.com/wp-content/uploads/2019/06/15-recruitment-skills-and-competencies-every-recruiter-should-possess.jpg',
+            uri: data.image,
           }}
         />
       </View>
@@ -65,7 +66,6 @@ export default ItemFeed;
 
 const styles = StyleSheet.create({
   container: {
-    height: 250,
     backgroundColor: '#FFFFFF',
   },
   top: {

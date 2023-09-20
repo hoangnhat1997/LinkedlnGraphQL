@@ -12,7 +12,7 @@ import React from 'react';
 import {windowWidth} from '../utils/AppMetrics';
 import Icons from '../utils/Icons';
 import ItemFeed from '../components/ItemFeed';
-
+import dataJson from '../assets/dataJson.json';
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -34,7 +34,10 @@ const HomeScreen = () => {
         </View>
       </View>
       <View style={styles.itemsList}>
-        <ItemFeed />
+        <FlatList
+          data={dataJson}
+          renderItem={({item}) => <ItemFeed data={item} />}
+        />
       </View>
     </SafeAreaView>
   );
@@ -81,5 +84,7 @@ const styles = StyleSheet.create({
   message: {
     marginLeft: 20,
   },
-  itemsList: {marginTop: 10},
+  itemsList: {
+    marginTop: 10,
+  },
 });
