@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   SafeAreaView,
   StyleSheet,
@@ -8,14 +9,31 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
+import {gql, useMutation} from '@apollo/client';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
 
+import {RootStackParams} from '../navigation/AppNavigation';
 import {windowWidth} from '../utils/AppMetrics';
 import Icons from '../utils/Icons';
 
+const insertPost = gql`
+  mutation MyMutation($userid: ID, $image: String, $content: String!) {
+    insertPost(userid: $userid, content: $content, image: $image) {
+      content
+      id
+      image
+    }
+  }
+`;
 const PostScreen = () => {
-  const [imgUrl, setImgUrl] = useState<string | undefined>('');
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
+  const [content, setContent] = useState<string>('');
+  const [imgUrl, setImgUrl] = useState<string | undefined>('');
+  const [handleMutation, {loading, data, error}] = useMutation(insertPost);
   const pickImage = async () => {
     const result = await launchImageLibrary({
       mediaType: 'photo',
@@ -23,6 +41,24 @@ const PostScreen = () => {
 
     if (result?.assets && result.assets.length > 0 && result.assets[0].uri) {
       setImgUrl(result.assets[0].uri);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await handleMutation({
+        variables: {
+          userid: '2',
+          content: content,
+          image:
+            'https://i.ex-cdn.com/nhadautu.vn/files/content/2020/01/28/kich-ban-de-viet-nam-dat-thu-nhap-trung-binh-cao-vao-nam-20251580120411-1221.jpg',
+        },
+      });
+      navigation.navigate('Home');
+      setContent('');
+    } catch (error) {
+      Alert.alert('Error when posting');
+      console.log(error);
     }
   };
 
@@ -38,8 +74,8 @@ const PostScreen = () => {
         <View>
           <Text style={styles.title}>Post</Text>
         </View>
-        <TouchableOpacity style={styles.post}>
-          <Text style={styles.submit}>Submit</Text>
+        <TouchableOpacity style={styles.post} onPress={handleSubmit}>
+          <Text style={styles.submit}>{loading ? 'Submit...' : 'Submit'}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.containerInput}>
@@ -50,6 +86,7 @@ const PostScreen = () => {
           numberOfLines={4}
           maxLength={255}
           style={styles.textInput}
+          onChangeText={setContent}
         />
       </View>
       <View style={styles.containerImage}>
