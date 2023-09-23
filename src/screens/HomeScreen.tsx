@@ -7,14 +7,51 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+
+import {RootStackParams} from '../navigation/AppNavigation';
 import {windowWidth} from '../utils/AppMetrics';
 import Icons from '../utils/Icons';
 import ItemFeed from '../components/ItemFeed';
 import dataJson from '../assets/dataJson.json';
+import {gql, useQuery} from '@apollo/client';
+import {RefreshControl} from 'react-native';
 
+const postList = gql`
+  query PostListQuery {
+    postList {
+      id
+      content
+      image
+    }
+  }
+`;
 const HomeScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const {loading, data, error, refetch} = useQuery(postList);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (refetch) {
+        refetch();
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  if (loading) {
+    return (
+      <ActivityIndicator
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+      />
+    );
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.containerHeader}>
@@ -36,7 +73,7 @@ const HomeScreen = () => {
       </View>
       <View style={styles.itemsList}>
         <FlatList
-          data={dataJson}
+          data={data.postList}
           renderItem={({item}) => <ItemFeed data={item} />}
         />
       </View>
@@ -87,6 +124,6 @@ const styles = StyleSheet.create({
   },
   itemsList: {
     marginTop: 10,
+    marginBottom: 50,
   },
-
 });

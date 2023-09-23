@@ -2,12 +2,37 @@ import {PropsWithChildren} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 type IconsProps = PropsWithChildren<{
   name: string;
   size: number;
 }>;
 const Icons = ({name, size}: IconsProps) => {
   switch (name) {
+    case 'camera':
+      return <Icon name={'camera'} size={size} />;
+
+    case 'home':
+      return <Icon name={'home'} size={size} />;
+
+    case 'homeA':
+      return <Icon name={'home'} size={size} style={{color: '#0c4ae5'}} />;
+
+    case 'post':
+      return <Icon name={'plus-square'} size={size} />;
+
+    case 'postA':
+      return (
+        <Icon name={'plus-square'} size={size} style={{color: '#0c4ae5'}} />
+      );
+
+    case 'profile':
+      return <Icon name={'user-alt'} size={size} />;
+
+    case 'profileA':
+      return <Icon name={'user-alt'} size={size} style={{color: '#0c4ae5'}} />;
+
     case 'share':
       return <Icon name={'share'} size={size} style={{color: '#737885'}} />;
 
