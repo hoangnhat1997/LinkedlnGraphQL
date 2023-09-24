@@ -39,12 +39,12 @@ const ItemFeed = ({data}: any) => {
           {data.content}
           {/* Open new position for FullStack Developer 3 years experience */}
         </Text>
-        <Image
+        {/* <Image
           style={styles.imgContent}
           source={{
             uri: data.image,
           }}
-        />
+        /> */}
       </View>
       <View style={styles.containerAction}>
         <View style={styles.actionButton}>
