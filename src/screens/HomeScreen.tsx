@@ -30,10 +30,28 @@ const postList = gql`
     }
   }
 `;
+const postPaginatedList = gql`
+  query PostPaginatedListQuery($first: Int, $after: Int) {
+    postPaginatedList(first: $first, after: $after) {
+      id
+      content
+    }
+  }
+`;
 const HomeScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const {loading, data, error, refetch} = useQuery(postList);
+
+  const [hasMore, setHasMore] = useState(true);
+
+  const {loading, data, error, refetch, fetchMore} = useQuery(
+    postPaginatedList,
+    {
+      variables: {
+        first: 4,
+      },
+    },
+  );
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -44,6 +62,23 @@ const HomeScreen = () => {
 
     return unsubscribe;
   }, [navigation]);
+
+  const loadMore = async () => {
+    if (!hasMore) {
+      return;
+    }
+
+    const res = await fetchMore({
+      variables: {
+        after: data.postPaginatedList.length,
+      },
+    });
+    console.log('==========', res.data.postPaginatedList);
+
+    if (res.data.postPaginatedList.length === 0) {
+      setHasMore(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -73,8 +108,26 @@ const HomeScreen = () => {
       </View>
       <View style={styles.itemsList}>
         <FlatList
-          data={data.postList}
+          data={data.postPaginatedList}
           renderItem={({item}) => <ItemFeed data={item} />}
+          showsVerticalScrollIndicator={false}
+          onEndReached={loadMore}
+          refreshing={loading}
+          onRefresh={refetch}
+          // ListFooterComponent={() => (
+          //   <Text
+          //     onPress={loadMore}
+          //     style={{
+          //       alignSelf: 'center',
+          //       padding: 10,
+          //       marginTop: 10,
+          //       fontSize: 20,
+          //       color: 'white',
+          //       backgroundColor: 'blue',
+          //     }}>
+          //     Load More
+          //   </Text>
+          // )}
         />
       </View>
     </SafeAreaView>

@@ -50,12 +50,11 @@ const PostScreen = () => {
         variables: {
           userid: '2',
           content: content,
-          image:
-            'https://i.ex-cdn.com/nhadautu.vn/files/content/2020/01/28/kich-ban-de-viet-nam-dat-thu-nhap-trung-binh-cao-vao-nam-20251580120411-1221.jpg',
+          image: null,
         },
       });
-      navigation.navigate('Home');
       setContent('');
+      navigation.navigate('Home');
     } catch (error) {
       Alert.alert('Error when posting');
       console.log(error);
